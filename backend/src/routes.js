@@ -8,23 +8,23 @@ const SessionController = require("./controllers/SessionController");
 
 const routes = express.Router();
 
-routes.post("/session", SessionController.create);
+routes.post("/api/session", SessionController.create);
 
-routes.get("/ongs", OngController.index);
+routes.get("/api/ongs", OngController.index);
 /**
  * Query
  * Route
  * Body
  */
 routes.post(
-  "/ongs",
+  "/api/ongs",
   celebrate({
     [Segments.BODY]: Joi.object().keys({
       name: Joi.string().required(),
       email: Joi.string()
         .required()
         .email(),
-      whatsapp: Joi.number()
+      whatsapp: Joi.string()
         .required()
         .min(10)
         .max(11),
@@ -38,7 +38,7 @@ routes.post(
 );
 
 routes.get(
-  "/profile",
+  "/api/profile",
   celebrate({
     [Segments.HEADERS]: Joi.object({
       authorization: Joi.string().required()
@@ -48,7 +48,7 @@ routes.get(
 );
 
 routes.get(
-  "/incidents",
+  "/api/incidents",
   celebrate({
     [Segments.QUERY]: Joi.object().keys({
       page: Joi.number()
@@ -60,7 +60,7 @@ routes.get(
 routes.post("/api/incidents", IncidentController.create);
 
 routes.delete(
-  "/incidents/:id",
+  "/api/incidents/:id",
   celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       id: Joi.number().required()
